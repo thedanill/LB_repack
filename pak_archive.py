@@ -2,16 +2,14 @@ import struct
 from typing import List, Dict
 from pathlib import Path
 
-underscore_white_list = ["_varstr", "_arflag", "_colorbg", "_shakelist"]
-
 
 class PAKArchive:
     """
     PAK file is a custom archive format used by the Luca System Engine.
-    It consists of four main sections: Header, File Table, File Names, and File Data.
+    It consists of four main sections: Header, File table, File names, and File data.
     File compression is not applied.
 
-    1. Header Structure (36 bytes):
+    1. header structure (36 bytes):
        - total header size (4 bytes): total size of header + file table + file names
        - file count (4 bytes): number of files in the archive
        - ID start (4 bytes): something for image archives
@@ -22,18 +20,18 @@ class PAKArchive:
        - unknown4 (4 bytes): purpose unknown
        - flags (4 x 1 byte): idk, just copy from original
 
-    2. File Table:
+    2. file table:
        consists of entries for each file, where each entry contains:
        - offset (4 bytes): file data offset in block units (multiply by Block Size for byte offset)
        - size (4 bytes): size of the file in bytes
         total size = 8 bytes * file count
 
-    3. File Names:
+    3. file names:
        - starts at the offset specified in the header
        - contains null-terminated ASCII strings for each file name
        - the order corresponds to the order of entries in the File Table
 
-    4. File Data:
+    4. file data:
        - raw file data stored sequentially
        - each file starts at the offset specified in its File Table entry
 
@@ -53,7 +51,7 @@ class PAKArchive:
     def read_header(self) -> None:
         """Read and parse the PAK file header."""
         with open(self.file_path, 'rb') as file:
-            # Read header data
+            # read header data
             header = file.read(0x28)
             header_data = struct.unpack('<8I4BI', header)
 
@@ -70,7 +68,7 @@ class PAKArchive:
                 'file_names_offset': header_data[12]
             }
 
-            # Read file table
+            # read file table
             for _ in range(self.header['file_count']):
                 offset, size = struct.unpack('<II', file.read(8))
                 self.files.append({
@@ -78,7 +76,7 @@ class PAKArchive:
                     'size': size
                 })
 
-            # Read file names
+            # read file names
             file.seek(self.header['file_names_offset'])
             for i in range(self.header['file_count']):
                 self.files[i]['name'] = self._read_string(file)
@@ -105,8 +103,6 @@ class PAKArchive:
 
         with open(self.file_path, 'rb') as pak_file:
             for file_info in self.files:
-                if file_info['name'] in underscore_white_list:
-                    continue
                 pak_file.seek(file_info['offset'])
                 data = pak_file.read(file_info['size'])
 
@@ -114,7 +110,7 @@ class PAKArchive:
                 with open(file_path, 'wb') as out_file:
                     out_file.write(data)
 
-        # Write file names
+        # write file names
         with open(f'{output_path}/file_list.txt', 'w', encoding='ascii') as names_file:
             names_file.write("\n".join(self.file_list))
 
@@ -127,7 +123,7 @@ class PAKArchive:
 
         input_path = Path(input_dir)
 
-        # Read header from the original PAK file
+        # read header from the original PAK file
         with open(self.file_path, 'rb') as original_file:
             header = original_file.read(0x28)
             header_size = struct.unpack('<I', header[:4])[0]
@@ -135,7 +131,7 @@ class PAKArchive:
         if len(filenames) != self.header['file_count']:
             raise ValueError(f'File count mismatch. Expected: {self.file_count}, got: {len(filenames)}')
 
-        # Calculate file sizes and offsets
+        # calculate file sizes and offsets
         file_sizes = []
         file_offsets = []
         current_offset = header_size // self.header['block_size']
