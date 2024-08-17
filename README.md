@@ -1,10 +1,11 @@
 # LB_repack
 Русский | [English](README_en.md)
+
 Проект предназначен для работы со скриптами PC-переиздания [Little Busters! English Edition](https://vndb.org/v5 "リトルバスターズ！")  (Luca System, 2017г).
 
 
 ## Мотивация
-Основной проект для работы с ресурсами Luca System под названием [LuckSystem](https://github.com/wetor/LuckSystem) не может полностью перепаковывать игровые скрипты LB_EN на момент написания README. Попытался внести правки, но код построен на пятиэтажных абстракциях, в которых я быстро потерялся. Было решено писать свою предельно прямолинейную вариацию.
+Основной проект для работы с ресурсами Luca System [LuckSystem](https://github.com/wetor/LuckSystem) не может полностью перепаковывать игровые скрипты LB_EN на момент написания README. Я попытался внести правки, но его код построен на пятиэтажных абстракциях, в которых я быстро потерялся. Было решено писать свою предельно прямолинейную вариацию.
 
 ## Состояние проекта
 Основная цель — перевод новеллы на новый язык. Для этого всё готово. 
@@ -17,7 +18,7 @@ MESSAGE, SELECT, BATTLE, TASK, SAYAVOICETEXT и VARSTR_SET.
 
 Если вы считаете, что я пропустил какой-то opcode, содержащий игровой текст, создайте issue — я проверю.
 
-Код местами грязный, но я пока не знаю, как его заметно улучшить. Если есть мысли — pull request'ы открыты, пишите.
+Код местами грязный, но я пока не знаю, как его ощутимо улучшить. Если есть мысли — pull request'ы открыты, пишите.
 
 ## Использование
 В репозитории есть оригинальный SCRIPT.PAK из steam-версии игры (build 1.2.4.0).
@@ -51,7 +52,7 @@ MESSAGE, SELECT, BATTLE, TASK, SAYAVOICETEXT и VARSTR_SET.
 
 
 ## Благодарности
-1. [LuckSystem](https://github.com/wetor/LuckSystem) от [wetor](https://github.com/wetor) за общую идею и некоторую информацию о командах.
-2. [NXGameScripts](https://github.com/masagrator/NXGameScripts/tree/f0c6f0d847ea3bf7ca6f6b5b43101cdb003d52ea/Summer%20Pockets%20REFLECTION%20BLUE) от [masagrator](https://github.com/masagrator).
+1. [LuckSystem](https://github.com/wetor/LuckSystem) от [wetor](https://github.com/wetor) за общую идею и некоторую информацию о командах
+2. [NXGameScripts](https://github.com/masagrator/NXGameScripts/tree/f0c6f0d847ea3bf7ca6f6b5b43101cdb003d52ea/Summer%20Pockets%20REFLECTION%20BLUE) от [masagrator](https://github.com/masagrator)
 
 Код masagrator изначально был взят за основу проекта, но он него почти ничего не осталось.
