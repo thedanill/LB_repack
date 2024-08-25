@@ -1,46 +1,54 @@
 # LB_repack
 [Русский](README.md) | English
 
-A project for working with scripts from the PC reissue of Little Busters! English Edition (Luca System, 2017).
-
+A project for working with scripts from [Little Busters! English Edition](https://vndb.org/v5 "リトルバスターズ！") (Luca System, 2017).
+This tool supports both PC and Nintendo Switch versions of the game.
 
 
 ## Project Status
 The primary goal of enabling translation of the visual novel to a new language has been achieved. 
-The assembler and disassembler functions properly, producing files that are identical to the originals ones.
+The project includes:
 
 - Full-featured assembler and disassembler for scripts
-- Unpacker and packer .PAK archives
+- An unpacker and packer for .PAK archives (script archives only)
 
-Please note that the project intentionally supports a limited range of opcodes related to the novel's text 
-(MESSAGE, SELECT, BATTLE, TASK, SAYAVOICETEXT and VARSTR_SET). 
-This range may expand in future versions.
+The Nintendo Switch version, which is technically a completely different game running on a different engine version, is also supported.
+
+It's important to note that the disassembler *intentionally* supports a minimal set of opcodes related to the novel's text: 
+MESSAGE, SELECT, BATTLE, TASK, SAYAVOICETEXT, VARSTR_SET, and a few others.
+
+If you believe an important opcode has been missed, please create an issue, and it will be addressed if necessary.
+
 
 
 ## Usage
-The repository contains the original SCRIPT.PAK file from the Steam version of the game (build 1.2.4.0).
+The repository contains original script archives:
+- SCRIPT.PAK from the Steam version of the game (build 1.2.4.0)
+- SCRIPT.PAK from the Switch version of the game (title_id=0100943010310000, version=1.0.0)
 
 1. Unpack `SCRIPT.PAK` and disassemble the scripts:
     
     `python3 unpack.py`
 
-    This creates two folders: `unpacked` with assembled scripts and `disassembled` with disassembled scripts.
+    This creates two folders: `unpacked` with original scripts from the archive and `disassembled` with disassembled scripts.
 
-2. Modify scripts in the disassembled folder as needed.
+2. Modify scripts in the `disassembled` folder as needed.
 3. Compile scripts and generate a new `SCRIPT.PAK`:
 
     `python3 repack.py`
 
-For verification, use `test.py`, which reassembles all scripts and compares them with the originals.
+For verification, use `test.py`, which reassembles all scripts and compares them with the originals. They should be identical.
 
 
-## Known Issues
-SEEN8500 and SEEN8501 files are not currently supported due to their non-standard structure.
+## Notes
+SEEN8500 and SEEN8501 files are not script files, although they look similar:
 
+SEEN8500 contains accessory names used in character profiles and gift notifications to the protagonist.
 
-## Future Plans
- - Add support for the Nintendo Switch version
- - Resolve issues with SEEN8500 and SEEN8501 files
+SEEN8501 contains battle titles displayed in character profiles and at the end of each battle. 
+Most titles are static, but some are generated on the fly from an adjective and a noun. 
+This is partially documented in the [Japanese wiki](https://w.atwiki.jp/littlebus/pages/23.html) (see the bottom two tables).
+
 
 ## Acknowledgments
 1. [LuckSystem](https://github.com/wetor/LuckSystem) от [wetor](https://github.com/wetor) for the general idea and some information about commands.
